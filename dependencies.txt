@@ -2,10 +2,10 @@
 
 
 ---Navigation Component---
---Kotlin--
 
 https://developer.android.com/guide/navigation/navigation-getting-started#kotlin
-
+//buid.gradle (module:app) in the top
+-apply plugin: 'kotlin-kapt'
 To include Navigation support in your project, add the following dependencies to your app's build.gradle file:
 dependencies {
   def nav_version = "2.3.1"
