@@ -1,0 +1,265 @@
+////Android Architecture Component\\\\
+
+
+---Navigation Component---
+--Kotlin--
+
+https://developer.android.com/guide/navigation/navigation-getting-started#kotlin
+
+To include Navigation support in your project, add the following dependencies to your app's build.gradle file:
+dependencies {
+  def nav_version = "2.3.1"
+
+  // Java language implementation
+  implementation "androidx.navigation:navigation-fragment:$nav_version"
+  implementation "androidx.navigation:navigation-ui:$nav_version"
+
+  // Kotlin
+  implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+  implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+  // Feature module Support
+  implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
+
+  // Testing Navigation
+  androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
+}
+
+--type-safety by using Safe Args--
+
+To add Safe Args to your project, include the following classpath in your top level build.gradle file:
+buildscript {
+    repositories {
+        google()
+    }
+    dependencies {
+        def nav_version = "2.3.1"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
+    }
+}
+
+add this line to your app or module's build.gradle file:
+apply plugin: "androidx.navigation.safeargs" /apply plugin: "androidx.navigation.safeargs.kotlin" (kotlin only)
+
+You must have android.useAndroidX=true in your gradle.properties file as per Migrating to AndroidX.
+
+
+---Room---
+https://developer.android.com/topic/libraries/architecture/room#kotlin
+The Room persistence library provides an abstraction layer over SQLite to allow for more robust database access while harnessing the full power of SQLite.
+
+The library helps you create a cache of your app's data on a device that's running your app. This cache, 
+which serves as your app's single source of truth, allows users to view a consistent copy of key information within your app, 
+regardless of whether users have an internet connection.
+
+build.gradle file:
+dependencies {
+  def room_version = "2.2.5"
+
+  implementation "androidx.room:room-runtime:$room_version"
+  kapt "androidx.room:room-compiler:$room_version"
+
+  // optional - Kotlin Extensions and Coroutines support for Room
+  implementation "androidx.room:room-ktx:$room_version"
+
+  // optional - Test helpers
+  testImplementation "androidx.room:room-testing:$room_version"
+}
+
+--Java--
+
+dependencies {
+  def room_version = "2.2.5"
+
+  implementation "androidx.room:room-runtime:$room_version"
+  annotationProcessor "androidx.room:room-compiler:$room_version"
+
+  // optional - RxJava support for Room
+  implementation "androidx.room:room-rxjava2:$room_version"
+
+  // optional - Guava support for Room, including Optional and ListenableFuture
+  implementation "androidx.room:room-guava:$room_version"
+
+  // optional - Test helpers
+  testImplementation "androidx.room:room-testing:$room_version"
+}
+
+
+---Lifecycle/Viewmodel---
+
+--Java--
+
+dependencies {
+    def lifecycle_version = "2.2.0"
+    def arch_version = "2.1.0"
+
+    // ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
+    // LiveData
+    implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
+    // Lifecycles only (without ViewModel or LiveData)
+    implementation "androidx.lifecycle:lifecycle-runtime:$lifecycle_version"
+
+    // Saved state module for ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
+
+    // Annotation processor
+    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+    // alternately - if using Java8, use the following instead of lifecycle-compiler
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+
+    // optional - helpers for implementing LifecycleOwner in a Service
+    implementation "androidx.lifecycle:lifecycle-service:$lifecycle_version"
+
+    // optional - ProcessLifecycleOwner provides a lifecycle for the whole application process
+    implementation "androidx.lifecycle:lifecycle-process:$lifecycle_version"
+
+    // optional - ReactiveStreams support for LiveData
+    implementation "androidx.lifecycle:lifecycle-reactivestreams:$lifecycle_version"
+
+    // optional - Test helpers for LiveData
+    testImplementation "androidx.arch.core:core-testing:$arch_version"
+}
+
+--Kotlin--
+
+dependencies {
+    def lifecycle_version = "2.2.0"
+    def arch_version = "2.1.0"
+
+    // ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    // LiveData
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    // Lifecycles only (without ViewModel or LiveData)
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
+
+    // Saved state module for ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
+
+    // Annotation processor
+    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+    // alternately - if using Java8, use the following instead of lifecycle-compiler
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+
+    // optional - helpers for implementing LifecycleOwner in a Service
+    implementation "androidx.lifecycle:lifecycle-service:$lifecycle_version"
+
+    // optional - ProcessLifecycleOwner provides a lifecycle for the whole application process
+    implementation "androidx.lifecycle:lifecycle-process:$lifecycle_version"
+
+    // optional - ReactiveStreams support for LiveData
+    implementation "androidx.lifecycle:lifecycle-reactivestreams-ktx:$lifecycle_version"
+
+    // optional - Test helpers for LiveData
+    testImplementation "androidx.arch.core:core-testing:$arch_version"
+}
+
+////Networking/REST API calls in apps\\\\
+
+---Retrofit---: A type-safe HTTP client for Android and Java
+
+- example use: https://medium.com/mobile-app-development-publication/kotlin-and-retrofit-2-tutorial-with-working-codes-333a4422a890
+dependencies {
+implementation "com.squareup.retrofit2:retrofit:2.9.0"
+implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+implementation "com.squareup.retrofit2:adapter-rxjava2:2.3.0"
+}
+- Internet Permission in your AndroidManifest.xml
+<uses-permission android:name="android.permission.INTERNET" />
+
+
+---Volley---
+https://developer.android.com/training/volley
+
+dependencies {
+    ...
+    implementation 'com.android.volley:volley:1.1.1'
+}
+
+////Image loading\\\\
+
+Difference between Picasso and Glide
+Size and Method count:
+- Size of glide library almost 3.5 times larger than Picasso library
+- Picasso method count is 849 and for glide 2678 method count if you want to use glide we should enable ProGuard.
+Syntax;
+-syntax for both library are almost same if you simply want to load the image.
+-Both support fade animation and center crop, while loading the image you can also add placeholder image.
+Cache:
+-Picasso downloads the image and store full size image in the cahe and whenever we ask for same image it will return the full size image and resize them to fit into Image view in real time.
+-On the other hand glide work diffrently. It download image from url and resize it the size of Image view and stores it to the cache. Since if we need image in two diffrent size of image view, glide will store two different copies of the same image in the cache with different resolution. That will increase the disk image size.
+Memory Management:
+-Glide is memory efficient as compared to picasso becuase glide loading same image according to size of view but picsso loads full size image.
+-And if you want to prevent from OutOfMemoryError excecption we should go for glide.
+Image loading time:
+-Uploading time of picasso is better than glide if file is downloading form inter net but if file is downloading from cache glide is faster than picasso.
+-When we try to load an image from the url both libraries first check local cache and if the image is not present in the cache it will download from internet because of downloading glide will take time to convert and then upload bt picasso directly uploading that image by full size.
+Other features:
+-Animated Gif Support: glide supported animated gif but picasso doent.
+-Thumbnail Support: by using glide we can uload multiple image into the same view at the same time.
+Configuration and Customization: glide provides various configuration and customization.
+Conclusion:
+Both libraries has their own use, If you want small use of image you should go for Picasso but if you have lot of images use and memory management you should go for glide.
+
+---Picasso---
+https://square.github.io/picasso/
+
+dependencies {
+       ...
+       implementation 'com.squareup.picasso:picasso:2.71828'
+       ...
+    }
+Manifest file:
+<uses-permission android:name="android.permission.INTERNET" />
+
+---Glide---
+https://github.com/bumptech/glide
+
+repositories {
+  google()
+  jcenter()
+}
+
+dependencies {
+  implementation 'com.github.bumptech.glide:glide:4.11.0'
+  annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+}
+
+////Chip\\\\
+BelooS/ChipsLayoutManager: https://github.com/BelooS/ChipsLayoutManager
+dependencies {
+implementation 'com.beloo.widget:ChipsLayoutManager:0.3.7@aar'
+}
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+
+
+pchmn/MaterialChipsInput: https://github.com/pchmn/MaterialChipsInput
+
+To use this library your minSdkVersion must be >= 15.
+
+In your project level build.gradle :
+
+allprojects {
+    repositories {
+        ...
+        maven { url "https://jitpack.io" }
+    }
+}       
+In your app level build.gradle :
+
+dependencies {
+    implementation 'com.github.pchmn:MaterialChipsInput:1.0.8'
+}  
+
+robertlevonyan/MaterialChipView: https://github.com/robertlevonyan/materialChipView
+
+dependencies {
+ implementation 'com.robertlevonyan.view:MaterialChipView:2.0.4'
+}
+
+
